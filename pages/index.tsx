@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import Link from 'next/link';
+import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
@@ -13,11 +13,22 @@ export default function Home() {
                 />
                 <link rel='icon' href='/favicon.ico' />
             </Head>
-            <main>
-                <h1>Hello World</h1>
-                <Link href="/test">
-                    <a>Test page</a>
-                    </Link>
+            <main className="mx-6 md:mx-28">
+                <div className="flex flex-col md:flex-row-reverse md:items-start md:justify-around">
+                    <div className="w-[60px] mb-4 md:w-[150px] md:mb-0">
+                        <Image
+                            src="https://avatars.githubusercontent.com/u/13987407?v=4"
+                            alt="Avatar"
+                            width={150}
+                            height={150}
+                            className="rounded-full"
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <h1 className="text-4xl md:text-6xl font-bold">Chad Lewis</h1>
+                        <h3 className="text-lg md:text-xl mt-6">Front end engineer and aspiring JavaScript/TypeScript educator.</h3>
+                    </div>
+                </div>
             </main>
         </div>
     );
