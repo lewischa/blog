@@ -8,6 +8,7 @@ import path from 'path';
 import matter from 'gray-matter'
 import readingTime, { ReadTimeResults } from 'reading-time';
 import { AnchorHTMLAttributes, BlockquoteHTMLAttributes, HtmlHTMLAttributes } from 'react';
+import { YouTubeEmbed } from '@/components/YouTubeEmbed/YouTubeEmbed';
 
 interface TestPageProps {
     source: MDXRemoteSerializeResult;
@@ -22,7 +23,8 @@ const components = {
     h2: (props: HtmlHTMLAttributes<HTMLHeadingElement>) => <h2 className="text-2xl font-bold my-4" {...props} />,
     p: (props: HtmlHTMLAttributes<HTMLParagraphElement>) => <p className="my-2" {...props} />,
     a: (props: AnchorHTMLAttributes<HTMLAnchorElement>) => <a className="text-blue-600 hover:text-blue-400" {...props} />,
-    blockquote: (props: BlockquoteHTMLAttributes<HTMLParagraphElement>) => <blockquote className="border-l-4 border-gray-300 pl-4 my-4 ml-2" {...props} />
+    blockquote: (props: BlockquoteHTMLAttributes<HTMLParagraphElement>) => <blockquote className="border-l-4 border-gray-300 pl-4 my-4 ml-2" {...props} />,
+    YouTubeEmbed: (props: { id: string }) => <YouTubeEmbed {...props} />
 };
 
 export default function TestPage({ source, meta }: TestPageProps) {
@@ -30,7 +32,7 @@ export default function TestPage({ source, meta }: TestPageProps) {
     return (
         <div className="px-12">
             <h1 className="text-3xl font-bold">{meta.title}</h1>
-            <p className="text-gray-500">{meta.readingTime.text}</p>
+            <p className="text-gray-500 mb-6">{meta.readingTime.text}</p>
             <MDXEmbedProvider>
                 <MDXRemote {...source} components={components} />
             </MDXEmbedProvider>
