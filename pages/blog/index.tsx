@@ -15,7 +15,6 @@ interface PostInfo {
 }
 
 interface BlogPageProps {
-    // slugs: string[];
     posts: PostInfo[];
 }
 
@@ -56,13 +55,15 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<BlogPagePro
         const readingTimeResult = readingTime(blogSource);
         const { data } = matter(blogSource);
 
-        allPosts.push({
-            author: data.author,
-            byline: data.byline,
-            readingTime: readingTimeResult.text,
-            slug: fileName.replace('.mdx', ''),
-            title: data.title
-        });
+        if ((data.readyToPublish && process.env.NODE_ENV === 'production') || process.env.NODE_ENV !== 'production') {
+            allPosts.push({
+                author: data.author,
+                byline: data.byline,
+                readingTime: readingTimeResult.text,
+                slug: fileName.replace('.mdx', ''),
+                title: data.title
+            });
+        }
 
         return allPosts;
     }, [] as PostInfo[]);
