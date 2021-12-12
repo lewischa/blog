@@ -5,6 +5,8 @@ import path from 'path';
 import { GetStaticPropsResult } from 'next';
 import matter from 'gray-matter';
 import readingTime from 'reading-time';
+import { useEffect, useState } from 'react';
+import { SearchIcon } from '@heroicons/react/outline';
 
 interface PostInfo {
     title: string;
@@ -18,12 +20,35 @@ interface BlogPageProps {
     posts: PostInfo[];
 }
 
+const normalizeString = (str: string) => {
+    return str.trim().toLowerCase();
+};
+
 export default function BlogPosts({ posts }: BlogPageProps) {
+    const [searchString, setSearchString] = useState('');
+    const [filteredPosts, setFilteredPosts] = useState<PostInfo[]>([]);
+
+    useEffect(() => {
+        setFilteredPosts(
+            searchString ? posts.filter(({ title }) => normalizeString(title).includes(normalizeString(searchString))) : posts
+        );
+    }, [posts, searchString]);
+
     return (
         <div className="px-12">
             <h1 className="text-3xl font-bold mb-6">Blog</h1>
+            <div className="relative w-full mb-6">
+                <input
+                    className="w-full h-8 border border-gray-500 focus:outline-gray-700 rounded-md pl-4"
+                    type="text"
+                    onChange={(e) => setSearchString(e.target.value)}
+                    placeholder="Search by title"
+                    value={searchString}
+                />
+                <SearchIcon className="absolute h-4 top-2 right-2 text-gray-400" />
+            </div>
             <div className="flex flex-col gap-4">
-                {posts.map((post) => {
+                {filteredPosts.map((post) => {
                     return (
                         <Link
                             href={`/blog/${post.slug}`}
@@ -42,6 +67,9 @@ export default function BlogPosts({ posts }: BlogPageProps) {
                         </Link>
                     );
                 })}
+                {!filteredPosts.length &&
+                    <p>No blog posts found.</p>
+                }
             </div>
         </div>
     )
