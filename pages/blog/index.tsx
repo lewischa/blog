@@ -54,15 +54,13 @@ export default function BlogPosts({ posts }: BlogPageProps) {
                             href={`/blog/${post.slug}`}
                             key={post.slug}
                         >
-                            <a className="hover:scale-[1.03] transform transition-transform md:hover:scale-[1] group">
-                                <div className="w-full bg-slate-200 px-4 py-4 rounded-lg md:bg-transparent md:rounded-none">
-                                    <div className="flex flex-row justify-between items-baseline">
-                                        <h4 className="text-md font-bold md:text-lg md:group-hover:underline">{post.title}</h4>
-                                        <p className="text-slate-500">{post.author}</p>
-                                    </div>
-                                    <p className="text-slate-500">{post.readingTime} &bull; 1000 views</p>
-                                    <p className="mt-4">{post.byline}</p>
+                            <a className="w-full bg-slate-200 rounded-lg px-4 py-4 border-2 border-slate-500 border-opacity-0 hover:border-opacity-100 md:bg-transparent hover:scale-[1.03] transform transition-all md:hover:scale-[1] group">
+                                <div className="flex flex-row justify-between items-baseline">
+                                    <h4 className="text-md font-bold md:text-lg md:group-hover:underline">{post.title}</h4>
+                                    <p className="text-slate-500">{post.author}</p>
                                 </div>
+                                <p className="text-slate-500">{post.readingTime} &bull; 1000 views</p>
+                                <p className="mt-4">{post.byline}</p>
                             </a>
                         </Link>
                     );
