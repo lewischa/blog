@@ -11,12 +11,17 @@ interface MobileNavItemProps {
 }
 
 function MobileNavItem({ currentPath, path, linkText, onClick }: MobileNavItemProps) {
+    const isMatch = currentPath === path;
+
     return (
-        <li className={`border-l-4 ${currentPath === path ? 'border-gray-300' : 'border-transparent'} list-none cursor-pointer pl-2`}>
-            <Link href={path}>
-                <a className="no-underline hover:underline" onClick={onClick}>{linkText}</a>
-            </Link>
-        </li>
+        <Link href={path}>
+            <a
+                className={`text-2xl border-b-2 ${isMatch ? 'border-slate-300' : 'border-transparent'} hover:border-slate-500`}
+                onClick={onClick}
+            >
+                {linkText}
+            </a>
+        </Link>
     );
 }
 
@@ -28,19 +33,20 @@ export function MobileMenu() {
 
     return (
         <div className="flex justify-end md:hidden w-full">
-            {!isOpen &&
-                <button onClick={() => {
-                    setIsOpen(true);
-                }}>
-                    <MenuIcon className="w-6 h-6" />
-                </button>
-            }
+            <button
+                className="relative w-6 h-6 z-20"
+                onClick={() => setIsOpen(!isOpen)}
+            >
+                <MenuIcon
+                    className={`absolute w-6 h-6 ${isOpen ? 'opacity-0' : 'opacity-100'} transition-opacity`}
+                />
+                <XIcon
+                    className={`absolute w-6 h-6 ${isOpen ? 'opacity-100' : 'opacity-0'} transition-opacity`}
+                />
+            </button>
             {isOpen &&
                 <>
-                    <button onClick={() => setIsOpen(false)}>
-                        <XIcon className="w-6 h-6" />
-                    </button>
-                    <ul className="absolute mt-6">
+                    <div className="absolute flex flex-col items-center gap-6 w-full z-10 left-0 mt-6 h-screen bg-zinc-50">
                         <MobileNavItem
                             currentPath={pathname}
                             path="/"
@@ -53,7 +59,7 @@ export function MobileMenu() {
                             linkText="Blog"
                             onClick={onNavItemClicked}
                         />
-                    </ul>
+                    </div>
                 </>
 
             }
