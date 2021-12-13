@@ -40,7 +40,7 @@ export function MobileMenu() {
                     <button onClick={() => setIsOpen(false)}>
                         <XIcon className="w-6 h-6" />
                     </button>
-                    <ul className="absolute mt-6 bg-white">
+                    <ul className="absolute mt-6">
                         <MobileNavItem
                             currentPath={pathname}
                             path="/"
