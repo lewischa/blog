@@ -36,16 +36,48 @@ export default function BlogPosts({ posts }: BlogPageProps) {
 
     return (
         <div className="px-12">
-            <h1 className="text-3xl font-bold mb-6">Blog</h1>
+            <h1 className="text-3xl font-bold mb-8">Blog</h1>
             <div className="relative w-full mb-6">
                 <input
-                    className="w-full h-8 border border-gray-500 focus:outline-gray-700 rounded-md pl-4"
+                    className="
+                        w-full
+                        h-8
+                        border
+                        border-gray-500
+                        focus:outline-gray-700
+                        rounded-md
+                        pl-4
+                        placeholder-transparent
+                        peer
+                    "
                     type="text"
+                    id="search"
                     onChange={(e) => setSearchString(e.target.value)}
                     placeholder="Search by title"
                     value={searchString}
                 />
-                <SearchIcon className="absolute h-4 top-2 right-2 text-gray-400" />
+                <label
+                    className="
+                        absolute
+                        -top-6
+                        left-1
+                        text-gray-500
+                        duration-300
+                        peer-placeholder-shown:top-1
+                        peer-placeholder-shown:left-4
+                        peer-focus:-top-6
+                        peer-focus:left-1
+                        peer-focus:text-gray-700
+                        peer-focus:duration-100
+                        transition-all
+                    "
+                    htmlFor="search"
+                >
+                        Search by title
+                </label>
+                <SearchIcon
+                    className="absolute h-4 top-2 right-2 text-gray-500 peer-focus:text-gray-700"
+                />
             </div>
             <div className="flex flex-col gap-4">
                 {filteredPosts.map((post) => {
