@@ -7,6 +7,7 @@ import matter from 'gray-matter';
 import readingTime from 'reading-time';
 import { useEffect, useState } from 'react';
 import { SearchIcon } from '@heroicons/react/outline';
+import { ViewCounter } from '@/components/ViewCounter/ViewCounter';
 
 interface PostInfo {
     title: string;
@@ -91,7 +92,8 @@ export default function BlogPosts({ posts }: BlogPageProps) {
                                     <h4 className="text-md font-bold md:text-lg md:group-hover:underline">{post.title}</h4>
                                     <p className="text-slate-500">{post.author}</p>
                                 </div>
-                                <p className="text-slate-500">{post.readingTime} &bull; 1000 views</p>
+                                <p className="text-slate-500">{post.readingTime}</p>
+                                <ViewCounter className="text-slate-500" slug={post.slug} />
                                 <p className="mt-4">{post.byline}</p>
                             </a>
                         </Link>
