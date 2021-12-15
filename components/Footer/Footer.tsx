@@ -1,3 +1,4 @@
+import { Constants } from 'lib/constants';
 import Link from 'next/link';
 import { SocialIcon } from 'react-social-icons';
 
@@ -18,7 +19,7 @@ export function Footer() {
                     <p className="text-black font-bold">Social</p>
                     <div className="flex gap-2">
                         <SocialIcon
-                            url="https://www.youtube.com/channel/UCMhqMbMDSdXHbDw648f1W2g"
+                            url={Constants.YouTubeChannelUrl}
                                 // Social icons don't allow size styling by class name :(
                                 style={{
                                     width: '2.5rem',
