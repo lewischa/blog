@@ -1,6 +1,6 @@
 import { serialize } from 'next-mdx-remote/serialize'
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
-import { GetStaticPaths, GetStaticPropsContext } from 'next';
+import { GetStaticPaths, GetStaticPropsContext, GetStaticPropsResult } from 'next';
 import { MDXEmbedProvider } from 'mdx-embed';
 
 import fs from 'fs';
@@ -9,12 +9,14 @@ import matter from 'gray-matter'
 import readingTime, { ReadTimeResults } from 'reading-time';
 import { AnchorHTMLAttributes, BlockquoteHTMLAttributes, HtmlHTMLAttributes } from 'react';
 import { YouTubeEmbed } from '@/components/YouTubeEmbed/YouTubeEmbed';
+import { ViewCounter } from '@/components/ViewCounter/ViewCounter';
 
-interface TestPageProps {
+interface BlogPageProps {
     source: MDXRemoteSerializeResult;
     meta: {
         title: string;
         readingTime: ReadTimeResults;
+        slug: string;
     };
 }
 
@@ -27,12 +29,12 @@ const components = {
     YouTubeEmbed: (props: { id: string }) => <YouTubeEmbed {...props} />
 };
 
-export default function TestPage({ source, meta }: TestPageProps) {
-    console.log('meta:', meta);
+export default function BlogPost({ source, meta }: BlogPageProps) {
     return (
         <div className="px-12">
             <h1 className="text-3xl font-bold">{meta.title}</h1>
-            <p className="text-gray-500 mb-6">{meta.readingTime.text}</p>
+            <p className="text-gray-500">{meta.readingTime.text}</p>
+            <ViewCounter slug={meta.slug} addView className="text-gray-500 mb-6" />
             <MDXEmbedProvider>
                 <MDXRemote {...source} components={components} />
             </MDXEmbedProvider>
@@ -40,14 +42,24 @@ export default function TestPage({ source, meta }: TestPageProps) {
     )
 }
 
-export async function getStaticProps(context: GetStaticPropsContext) {
+export async function getStaticProps(context: GetStaticPropsContext): Promise<GetStaticPropsResult<BlogPageProps>> {
     const slug = context.params?.slug as string;
 
     const blogSource = fs.readFileSync(path.join(process.cwd(), 'data', 'blogs', `${slug}.mdx`), { encoding: 'utf-8' });
     const {
         content,
         data
-    } = matter(blogSource);
+    } = matter(blogSource) as { content: string; data: { title?: string }};
+    const title = data.title;
+
+    if (!title) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        };
+    }
 
     const mdxSource = await serialize(content, { scope: data });
 
@@ -55,7 +67,8 @@ export async function getStaticProps(context: GetStaticPropsContext) {
         props: {
             source: mdxSource,
             meta: {
-                ...data,
+                title,
+                slug,
                 readingTime: readingTime(blogSource)
             }
         }
