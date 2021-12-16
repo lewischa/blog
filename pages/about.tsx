@@ -21,7 +21,7 @@ export default function About() {
             <Paragraph>
                 I live in California with my fiancee Lizzy (&#128141; date: 06/26/2022 &#127881;), our German Shepherd Luana, and our two cats Cheye and
                 Malcolm. We were fortunate enough to purchase a modest house at the very beginning of the pandemic,
-                though we had to move nearly a hundred miles from my hometown (Santa Rosa) to afford it! It&apos;s taken
+                though we had to move nearly a hundred miles to afford it! It&apos;s taken
                 a while, but we&apos;re adjusting just fine.
             </Paragraph>
             <h2 className="text-3xl md:text-5xl font-bold my-6">Creative Outlets</h2>
