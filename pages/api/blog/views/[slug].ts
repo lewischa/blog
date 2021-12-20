@@ -6,7 +6,6 @@ export default async function handler(
     res: NextApiResponse
 ) {
     try {
-        console.log('req.query:', req.query);
         const slug = req.query.slug.toString();
 
         if (req.method === 'POST') {

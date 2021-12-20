@@ -13,6 +13,7 @@ import { HTMLAttributes } from 'react';
 import { YouTubeEmbed } from '@/components/YouTubeEmbed/YouTubeEmbed';
 import { ViewCounter } from '@/components/ViewCounter/ViewCounter';
 import Image, { ImageProps } from 'next/image';
+import Link, { LinkProps } from 'next/link';
 
 interface BlogPageProps {
     source: MDXRemoteSerializeResult;
@@ -29,9 +30,10 @@ const components = {
     code: (props: HTMLAttributes<HTMLPreElement>) => {
         const language = props.className?.replace('language-', '') ?? 'javascript';
         const showLineNumbers = language !== 'bash';
-        console.log('code props:', props);
+
         return <SyntaxHighlighter showLineNumbers={showLineNumbers} style={okaidia} language={language} {...props} />;
-    }
+    },
+    Link: (props: LinkProps) => <Link {...props} />
 };
 
 export default function BlogPost({ source, meta }: BlogPageProps) {
@@ -49,11 +51,11 @@ export default function BlogPost({ source, meta }: BlogPageProps) {
                 prose-code:before:content-['']
                 prose-code:after:content-['']
                 prose-pre:bg-transparent
-                prose-pre:py-0
+                prose-pre:p-0
                 prose-pre:my-0
-                md:prose-pre:py-0
+                md:prose-pre:p-0
                 md:prose-pre:my-0
-                lg:prose-pre:py-0
+                lg:prose-pre:p-0
                 lg:prose-pre:my-0
             ">
                 <div className="prose-h1:mb-4 md:prose-h1:mb-6 lg:prose-h1:mb-8">
@@ -67,6 +69,9 @@ export default function BlogPost({ source, meta }: BlogPageProps) {
                 <MDXEmbedProvider>
                     <MDXRemote {...source} components={components} />
                 </MDXEmbedProvider>
+                <div className="flex justify-center">
+                    <hr className="border-gray-300 w-5/6" />
+                </div>
             </div>
         </article>
     )
@@ -110,7 +115,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
         .filter((filename) => filename.endsWith('.mdx'))
         .map((filename) => filename.replace('.mdx', ''));
 
-    console.log('blog files:', blogFiles);
     return {
         paths: blogFiles.map((slug) => {
             return {
