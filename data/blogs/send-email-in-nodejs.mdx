@@ -1,5 +1,5 @@
 ---
-title: Send Emails in NodeJS
+title: How to Send Emails in NodeJS
 readyToPublish: false
 byline: Learn how to send emails in NodeJS with SendGrid and Gmail.
 author: Chad Lewis
@@ -91,7 +91,7 @@ the API key additional permissions based on your use case, but it only needs to 
     alt="API Key Permissions"
 />
 
-Select **Create & View**, then copy the API key to the clipboard. Add the API key to your **.env** file.
+Select **Create & View**, then copy the API key to the clipboard. Add the API key to your `.env` file.
 
 ```env
 // .env file
@@ -102,9 +102,9 @@ SENDGRID_API_KEY=<your API key here>
 
 All the code we'll need to send the email is in the below 26 lines!
 
-1. **dotenv** pulls in our environment variables for use
-2. We set the API key from our **.env** file
-3. Invoke the **sendMail** helper function
+1. `dotenv` pulls in our environment variables for use
+2. We set the API key from our `.env` file
+3. Invoke the `sendMail` helper function
 
 ```javascript
 // index.js file
@@ -135,13 +135,13 @@ sendMail({
 });
 ```
 
-In your terminal, from your project's directory, run the **index.js** file:
+In your terminal, from your project's directory, run the `index.js` file:
 
 ```bash
 node index.js
 ```
 
-Go check the email account in the **to** field, and you should see the email come in!
+Go check the email account in the `to` field, and you should see the email come in!
 
 <div className="flex justify-center">
     <hr className="border-gray-300 w-5/6" />
