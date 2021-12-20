@@ -43,6 +43,10 @@ export default function BlogPost({ source, meta }: BlogPageProps) {
                 lg:prose-xl
                 prose-a:text-blue-600
                 hover:prose-a:text-blue-400
+                prose-code:bg-gray-200
+                prose-code:text-red-500
+                prose-code:before:content-['']
+                prose-code:after:content-['']
                 prose-pre:bg-transparent
                 prose-pre:py-0
                 prose-pre:my-0
