@@ -30,7 +30,7 @@ const components = {
     code: (props: HTMLAttributes<HTMLPreElement>) => {
         const language = props.className?.replace('language-', '') ?? 'javascript';
         const showLineNumbers = language !== 'bash';
-        console.log('code props:', props);
+
         return <SyntaxHighlighter showLineNumbers={showLineNumbers} style={okaidia} language={language} {...props} />;
     },
     Link: (props: LinkProps) => <Link {...props} />
@@ -115,7 +115,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
         .filter((filename) => filename.endsWith('.mdx'))
         .map((filename) => filename.replace('.mdx', ''));
 
-    console.log('blog files:', blogFiles);
     return {
         paths: blogFiles.map((slug) => {
             return {
