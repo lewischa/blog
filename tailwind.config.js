@@ -1,5 +1,10 @@
 module.exports = {
-    content: ['./pages/**/*.tsx', './components/**/*.tsx', './layouts/**/*.tsx'],
+    content: [
+        './pages/**/*.tsx',
+        './components/**/*.tsx',
+        './layouts/**/*.tsx',
+        './data/blogs/**/*.mdx'
+    ],
     darkMode: false, // or 'media' or 'class'
     theme: {
         extend: {},
@@ -7,5 +12,5 @@ module.exports = {
     variants: {
         extend: {},
     },
-    plugins: [],
+    plugins: [require('@tailwindcss/typography')],
 }
