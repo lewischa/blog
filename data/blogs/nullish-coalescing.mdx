@@ -1,0 +1,138 @@
+---
+title: Nullish Coalescing (??) in JavaScript
+readyToPublish: false
+byline: Learn how and when to use the nullish coalescing operator in JavaScript.
+author: Chad Lewis
+---
+
+<YouTubeEmbed id="AabuHLX2qZg" />
+
+## What is Nullish Coalescing?
+
+The Nullish Coalescing Operator (`??`) returns the right-hand value when the left-hand value is `null` or `undefined`,
+and returns the left-hand value otherwise.
+
+Since this operator allows us to detect and bypass `null` and `undefined`, it is typically used to
+provide default values.
+
+In the example below, each log statement logs "Default". The first is because `leftHand` is `undefined`, and the
+second is because `leftHand` is `null`.
+
+```javascript
+let leftHand; // undefined
+const rightHand = 'Default';
+
+console.log(leftHand ?? rightHand); // 'Default'
+
+leftHand = null;
+
+console.log(leftHand ?? rightHand); // 'Default'
+```
+
+This might look weird, and maybe it seems magical.
+
+In reality, we can actually achieve the same logic using
+operators/expressions we're already familiar with. By explicitly checking for `null` and `undefined`,
+we can determine whether `leftHand` or `rightHand` should be returned:
+```javascript
+let leftHand;
+const rightHand = 'Default';
+
+console.log(
+    leftHand !== null && leftHand !== undefined
+        ? leftHand
+        : rightHand
+);
+```
+
+So really, it's just syntax sugar... But it's pretty _sweet_ sugar, right??
+
+## Nullish Coalescing with Optional Chaining
+
+Nullish coalescing works great for getting default values, but it works even better with optional chaining (`?.`)! If
+you're not familiar with optional chaining yet, check out the <Link href="/blog/optional-chaining">blog post</Link> or
+corresponding <Link href="https://youtu.be/Xd_uK4rAL3E">YouTube video</Link>.
+
+The code below produces a runtime error when we try to reference and invoke `getFullYear` because we're not passing
+a _defined_ date argument into the function:
+
+```javascript
+function logYear(date) {
+    const now = new Date();
+    // Error if `date` is not defined!
+    const year = date.getFullYear()
+        ?? now.getFullYear();
+
+    console.log('The year is:', year);
+}
+
+// Error
+logYear();
+// Error
+logYear(null);
+```
+
+Using optional chaining, we can gracefully handle both the `undefined` and `null` cases, and fall back to
+`now.getFullYear()` with nullish coalescing:
+
+```javascript
+function logYear(date) {
+    const now = new Date();
+    // No Error :)
+    // `date?.` handles `null` and `undefined`
+    const year = date?.getFullYear()
+        ?? now.getFullYear();
+
+    console.log('The year is:', year);
+}
+
+// No Error :)
+logYear();
+// No Error :)
+logYear(null);
+```
+
+## Caveats
+
+While the nullish coalescing operator is quite helpful, there are a couple caveats.
+
+#### Requires Parentheses when Combined with Other Logical Operators
+
+Nullish coalescing can't be combined with logical `||` or `&&` operators - you'll get a SyntaxError without using parentheses
+to tell the code which parts of the expression take precedence.
+
+```javascript
+let age = 30;
+let leftHand;
+const rightHand = 'Default';
+
+// SyntaxError
+console.log(age && leftHand ?? rightHand);
+
+// Fixed!
+console.log(age && (leftHand ?? rightHand));
+```
+
+It's likely rare you'd run into a case that requires `||` or `&&` _and_ nullish coalescing, but it's important to
+keep in mind nonetheless.
+
+That said, you can have multiple nullish coalescing operators without parentheses:
+
+```javascript
+let age = 30;
+let leftHand;
+const rightHand = 'Default';
+
+// No SyntaxError
+console.log(age ?? leftHand ?? rightHand);
+```
+
+#### May Require a Polyfill
+
+According to <Link href="https://caniuse.com/?search=%3F%3F">Can I Use</Link>,
+Chrome added support for `??` around August 24, 2020, so it's relatively new. Additionally, IE doesn't support
+it at all (big surprise 🙄). Thus, you may need to polyfill the nullish coalescing operator if you're targeting IE
+or browsers before August 2020.
+
+As for NodeJS users, it's <Link href="https://node.green/#ES2021-features-Logical-Assignment-----basic-support">supported
+back to version 15</Link>.

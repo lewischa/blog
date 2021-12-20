@@ -13,6 +13,7 @@ import { HTMLAttributes } from 'react';
 import { YouTubeEmbed } from '@/components/YouTubeEmbed/YouTubeEmbed';
 import { ViewCounter } from '@/components/ViewCounter/ViewCounter';
 import Image, { ImageProps } from 'next/image';
+import Link, { LinkProps } from 'next/link';
 
 interface BlogPageProps {
     source: MDXRemoteSerializeResult;
@@ -31,7 +32,8 @@ const components = {
         const showLineNumbers = language !== 'bash';
         console.log('code props:', props);
         return <SyntaxHighlighter showLineNumbers={showLineNumbers} style={okaidia} language={language} {...props} />;
-    }
+    },
+    Link: (props: LinkProps) => <Link {...props} />
 };
 
 export default function BlogPost({ source, meta }: BlogPageProps) {
