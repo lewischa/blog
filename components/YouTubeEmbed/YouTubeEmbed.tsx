@@ -13,9 +13,7 @@ export function YouTubeEmbed({ id }: { id: string }) {
                         !
                     </em>
                 </p>
-                <div className="hidden sm:block">
-                    <YouTube youTubeId={id} aspectRatio="16:9" />
-                </div>
+                <YouTube youTubeId={id} aspectRatio="16:9" />
             </div>
         </div>
     );
