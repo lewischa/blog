@@ -1,3 +1,4 @@
+import { Heading } from '@/components/Heading/Heading';
 import { Link } from '@/components/Link/Link';
 import { Constants } from 'lib/constants';
 import { ReactNode } from 'react';
@@ -13,7 +14,7 @@ function Paragraph({ children }: { children: ReactNode }) {
 export default function About() {
     return (
         <div>
-            <h1 className="text-4xl md:text-6xl font-bold my-8">About Me</h1>
+            <Heading className="my-8">About Me</Heading>
             <Paragraph>
                 Hey, my name is Chad Lewis. I work for Disney Streaming as a Senior Front End Software Engineer, and
                 am an aspiring YouTuber, blogger, and JavaScript educator.
@@ -24,7 +25,7 @@ export default function About() {
                 though we had to move nearly a hundred miles to afford it! It&apos;s taken
                 a while, but we&apos;re adjusting just fine.
             </Paragraph>
-            <h2 className="text-3xl md:text-5xl font-bold my-6">Creative Outlets</h2>
+            <Heading variant="h2" className="my-6">Creative Outlets</Heading>
             <Paragraph>
                 I&apos;ve had the privilege of working on the Disney+ Smart TV app since its inception back in 2018. As
                 more people joined the team I began to enjoy teaching others about the app, the ecosystem, and
@@ -46,14 +47,14 @@ export default function About() {
                 is: my own personal slice of the 21st century&apos;s online world, where I can do whatever I want,
                 whenever I want. Pretty freeing!
             </Paragraph>
-            <h2 className="text-3xl md:text-5xl font-bold my-6">Likes</h2>
+            <Heading variant="h2" className="my-6">Likes</Heading>
             <div>These are some of the things I enjoy in my free time, in no particular order:</div>
             <ul className="list-disc ml-8">
                 <li>Spending time with friends and family</li>
                 <li>SCUBA diving</li>
                 <li>Coding (of course!)</li>
             </ul>
-            <h2 className="text-3xl md:text-5xl font-bold my-6">What&apos;s Next?</h2>
+            <Heading variant="h2" className="my-6">What&apos;s Next?</Heading>
             <Paragraph>
                 For now, no changes in sight for my current job, and I&apos;ll continue uploading YouTube videos
                 (with accompanying blog posts here) to see where that takes me.

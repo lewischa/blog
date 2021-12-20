@@ -39,6 +39,7 @@ export default function BlogPost({ source, meta }: BlogPageProps) {
         <article className="flex justify-center w-full pt-6">
             <div className="
                 prose
+                w-full
                 md:prose-lg
                 lg:prose-xl
                 prose-a:text-blue-600
@@ -56,7 +57,8 @@ export default function BlogPost({ source, meta }: BlogPageProps) {
                 lg:prose-pre:my-0
             ">
                 <div className="prose-h1:mb-4 md:prose-h1:mb-6 lg:prose-h1:mb-8">
-                    <h1 className="text-3xl font-bold">{meta.title}</h1>
+                    { /* Using `h1` here instead of `Heading` because it's within a "prose" class */ }
+                    <h1>{meta.title}</h1>
                 </div>
                 <div className="prose-p:my-0 md:prose-p:my-0 lg:prose-p:my-0">
                     <p className="text-gray-500">{meta.readingTime.text}</p>
