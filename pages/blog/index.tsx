@@ -81,7 +81,7 @@ export default function BlogPosts({ posts }: BlogPageProps) {
                     className="absolute h-4 top-2 right-2 text-gray-500 peer-focus:text-gray-700"
                 />
             </div>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 mb-8">
                 {filteredPosts.map((post) => {
                     return (
                         <Link

@@ -1,0 +1,217 @@
+---
+title: Optional Chaining in JavaScript
+readyToPublish: false
+byline: Learn how to use optional chaining to level up your JavaScript in dealing with null or undefined values.
+author: Chad Lewis
+---
+
+<YouTubeEmbed id="Xd_uK4rAL3E" />
+
+## What is Optional Chaining?
+
+The optional chaining operator (`?.`) allows you to safely retrieve a value, or even call a function, from a nested
+object when any of the references along the way may be `undefined` or `null`.
+
+If an object or function preceding the `?.` operator is `undefined` or `null`, JavaScript will short-circuit the
+evaluation (bail out early) and return `undefined`.
+
+## How is it Used?
+
+Let's see an example where optional chaining could help. In the example below, we have a dog and a puppy. The dog's
+(Dug's) owner is Carl, but the puppy (Luna) doesn't have an owner yet because she's a newborn. If we naively assume
+every dog has an owner and try to log out the name, we'll get an error when we get to Luna because the `owner` and
+`name` properties don't exist:
+
+```javascript
+const dog = {
+    name: 'Dug',
+    owner: {
+        name: {
+            first: 'Carl',
+            last: 'Fredricksen'
+        }
+    }
+};
+
+const puppy = {
+    name: 'Luna'
+};
+
+const dogs = [
+    dog,
+    puppy
+];
+
+dogs.forEach((dog) => {
+    // Error when we get to Luna!
+    const owner = dog.owner.name.first;
+
+    console.log(`${dog.name} is owned by ${owner}`);
+});
+```
+
+Without optional chaining, we might fix the loop like this:
+```javascript
+dogs.forEach((dog) => {
+    // `if` statement protects against
+    // `null` and `undefined`
+    if (dog.owner && dog.owner.name) {
+        // No error now
+        const owner = dog.owner.name.first;
+
+        console.log(`${dog.name} is owned by ${owner}`);
+    }
+});
+```
+
+That's fine, and there's nothing wrong with that approach, but optional chaining makes this easier and cleaner - especially
+when the object is more deeply nested.
+
+For this example, we can use optional chaining like so:
+
+```javascript
+dogs.forEach((dog) => {
+    // `owner` doesn't exist on Luna,
+    // so `?.` returns `undefined`
+    // which is evaluated to `false`, which
+    // doesn't pass the `if` condition.
+    if (dog.owner?.name) {
+        const owner = dog.owner.name.first;
+
+        console.log(`${dog.name} is owned by ${owner}`);
+    }
+});
+
+// Or, perhaps another way:
+dogs.forEach((dog) => {
+    // If both `owner` and `name` are defined,
+    // `first` will be returned. Otherwise,
+    // `undefined` will be returned.
+    const owner = dog.owner?.name?.first;
+
+    if (owner) {
+        console.log(`${dog.name} is owned by ${owner}`);
+    }
+});
+```
+
+### Using Optional Chaining with Functions
+
+Using `?.` with property access is really helpful, but using it with functions can be useful as well.
+
+Let's modify our code to:
+1. Add a `bark` function to Dug (Luna won't get one yet since she's still too young)
+2. Call the `bark` function after logging out each dog's owner
+
+Here's the code updated with `bark`, but we still get an error:
+
+```javascript
+const dog = {
+    name: 'Dug',
+    owner: {
+        name: {
+            first: 'Carl',
+            last: 'Fredricksen'
+        }
+    },
+    bark: () => {
+        console.log('I can bark!');
+    }
+};
+
+const puppy = {
+    name: 'Luna'
+};
+
+const dogs = [
+    dog,
+    puppy
+];
+
+dogs.forEach((dog) => {
+    if (dog.owner?.name) {
+        const owner = dog.owner.name.first;
+
+        console.log(`${dog.name} is owned by ${owner}`);
+    }
+
+    // Error on Luna, she doesn't have a `bark` function!
+    dog.bark();
+});
+```
+
+To fix the error, use `?.` again:
+```javascript
+dogs.forEach((dog) => {
+    if (dog.owner?.name) {
+        const owner = dog.owner.name.first;
+
+        console.log(`${dog.name} is owned by ${owner}`);
+    }
+
+    // No error now :)
+    dog.bark?.();
+});
+```
+
+Woah, that syntax looks wonky - `?.` _before_ the parentheses `dog.bark?.()`?
+
+Yep! The syntax may be unfamiliar, but remember it's the _function_ we're trying to protect. In this case, if `dog.bark`
+is `null` or `undefined`, JavaScript will bail out and return `undefined`, without trying to invoke the nonexistent
+function.
+
+### Optional Chaining with Arrays
+
+Let's add a `toys` array to Dug for his favorite toys. As you guessed, Luna won't get any yet since she's so young.
+
+```javascript
+const dog = {
+    name: 'Dug',
+    owner: {
+        name: {
+            first: 'Carl',
+            last: 'Fredricksen'
+        }
+    },
+    bark: () => {
+        console.log('I can bark!');
+    },
+    toys: ['Squirrel']
+};
+```
+
+Now we'll add a log statement to log out each dog's favorite toy, but we'll do it without optional chaining first.
+As with the other examples, we'll get an error when trying to access `toys[0]` on Luna because the `toys` array
+doesn't exist:
+
+```javascript
+dogs.forEach((dog) => {
+    if (dog.owner?.name) {
+        const owner = dog.owner.name.first;
+
+        console.log(`${dog.name} is owned by ${owner}`);
+    }
+
+    dog.bark?.();
+
+    // Error!
+    console.log(`${dog.name}'s favorite toy is: ${dog.toys[0]}`)
+});
+```
+
+Using a similar syntax to the function example, adding the optional chaining operator fixes the problem:
+
+```javascript
+dogs.forEach((dog) => {
+    if (dog.owner?.name) {
+        const owner = dog.owner.name.first;
+
+        console.log(`${dog.name} is owned by ${owner}`);
+    }
+
+    dog.bark?.();
+
+    // No error now :)
+    console.log(`${dog.name}'s favorite toy is: ${dog.toys?.[0]}`)
+});
+```
