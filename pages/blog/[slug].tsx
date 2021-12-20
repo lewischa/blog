@@ -36,16 +36,33 @@ const components = {
 
 export default function BlogPost({ source, meta }: BlogPageProps) {
     return (
-        <div className="px-2 md:px-4 xl:px-6">
-            <h1 className="text-3xl font-bold">{meta.title}</h1>
-            <p className="text-gray-500">{meta.readingTime.text}</p>
-            <ViewCounter slug={meta.slug} addView className="text-gray-500 mb-6" />
-            <div className="prose">
+        <article className="flex justify-center w-full pt-6">
+            <div className="
+                prose
+                md:prose-lg
+                lg:prose-xl
+                prose-a:text-blue-600
+                hover:prose-a:text-blue-400
+                prose-pre:bg-transparent
+                prose-pre:py-0
+                prose-pre:my-0
+                md:prose-pre:py-0
+                md:prose-pre:my-0
+                lg:prose-pre:py-0
+                lg:prose-pre:my-0
+            ">
+                <div className="prose-h1:mb-4 md:prose-h1:mb-6 lg:prose-h1:mb-8">
+                    <h1 className="text-3xl font-bold">{meta.title}</h1>
+                </div>
+                <div className="prose-p:my-0 md:prose-p:my-0 lg:prose-p:my-0">
+                    <p className="text-gray-500">{meta.readingTime.text}</p>
+                </div>
+                <ViewCounter slug={meta.slug} addView className="not-prose text-gray-500 mb-6" />
                 <MDXEmbedProvider>
                     <MDXRemote {...source} components={components} />
                 </MDXEmbedProvider>
             </div>
-        </div>
+        </article>
     )
 }
 
