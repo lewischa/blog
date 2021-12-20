@@ -1,3 +1,4 @@
+import { Heading } from '@/components/Heading/Heading';
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
@@ -24,8 +25,10 @@ export default function Home() {
                     />
                 </div>
                 <div className="flex flex-col">
-                    <h1 className="text-4xl md:text-6xl font-bold">Chad Lewis</h1>
-                    <h3 className="text-lg md:text-xl mt-6">Front end engineer and aspiring JavaScript/TypeScript educator.</h3>
+                    <Heading>Chad Lewis</Heading>
+                    <Heading variant="h4" className="mt-6 font-normal">
+                        Front end engineer and aspiring JavaScript/TypeScript educator.
+                    </Heading>
                 </div>
             </div>
         </div>

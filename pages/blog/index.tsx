@@ -8,6 +8,7 @@ import readingTime from 'reading-time';
 import { useEffect, useState } from 'react';
 import { SearchIcon } from '@heroicons/react/outline';
 import { ViewCounter } from '@/components/ViewCounter/ViewCounter';
+import { Heading } from '@/components/Heading/Heading';
 
 interface PostInfo {
     title: string;
@@ -37,7 +38,7 @@ export default function BlogPosts({ posts }: BlogPageProps) {
 
     return (
         <div className="px-12">
-            <h1 className="text-3xl font-bold mb-8">Blog</h1>
+            <Heading className="mb-8">Blog</Heading>
             <div className="relative w-full mb-6">
                 <input
                     className="
@@ -89,7 +90,7 @@ export default function BlogPosts({ posts }: BlogPageProps) {
                         >
                             <a className="w-full bg-slate-200 rounded-lg px-4 py-4 border-2 border-slate-500 border-opacity-0 hover:border-opacity-100 md:bg-transparent hover:scale-[1.03] transform transition-all md:hover:scale-[1] group">
                                 <div className="flex flex-row justify-between items-baseline">
-                                    <h4 className="text-md font-bold md:text-lg md:group-hover:underline">{post.title}</h4>
+                                    <Heading variant="h4" className="md:group-hover:underline">{post.title}</Heading>
                                     <p className="text-slate-500">{post.author}</p>
                                 </div>
                                 <p className="text-slate-500">{post.readingTime}</p>
